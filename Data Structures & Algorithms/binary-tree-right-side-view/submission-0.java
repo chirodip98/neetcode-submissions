@@ -5,7 +5,7 @@
  *     TreeNode left;
  *     TreeNode right;
  *     TreeNode() {}
- *     TreeNode(int val) {\ this.val = val; }
+ *     TreeNode(int val) { this.val = val; }
  *     TreeNode(int val, TreeNode left, TreeNode right) {
  *         this.val = val;
  *         this.left = left;
@@ -15,27 +15,23 @@
  */
 
 class Solution {
+    List<Integer> rightView = new ArrayList<>();
+    int[] visited = new int[101];
     public List<Integer> rightSideView(TreeNode root) {
 
-        List<Integer> rightView = new ArrayList<>();
+        int level = 0;
         if(root==null) return rightView;
-
-        Queue<TreeNode> Q = new LinkedList<>();
-        Q.offer(root);
-
-        while(!Q.isEmpty())
-        {
-            int size = Q.size();
-            for(int i=0; i<size; i++)
-            {
-                TreeNode top = Q.poll();
-                if(i == 0) rightView.add(top.val);
-                if(top.right!=null) Q.offer(top.right);
-                if(top.left!=null) Q.offer(top.left);
-            }
-        }
-
+        helperRightView(root, level);
         return rightView;
-        
+    }
+
+    private void helperRightView(TreeNode root, int level)
+    {
+        if(root==null) return;
+        if(visited[level]==0) { rightView.add(root.val); visited[level]=1; }
+        helperRightView(root.right, level+1);
+        helperRightView(root.left, level+1);
+        return;
+
     }
 }
