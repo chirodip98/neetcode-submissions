@@ -15,19 +15,21 @@
  */
 
 class Solution {
-    int maxSum = Integer.MIN_VALUE;
+    private int maxSum = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        helperMaxSum(root);
-        return maxSum;
 
+        if(root==null) return maxSum;
+        helper(root);
+        return maxSum;
+        
     }
-    private int helperMaxSum(TreeNode root)
+
+    private int helper(TreeNode root)
     {
         if(root==null) return 0;
-        int left = Math.max(0, helperMaxSum(root.left));
-        int right = Math.max(0, helperMaxSum(root.right));
-        maxSum = Math.max(maxSum, root.val + left + right);
-        return root.val + Math.max(left, right);
+        int left = Math.max(0, helper(root.left));
+        int right = Math.max(0 ,helper(root.right));
+        maxSum = Math.max(maxSum, left+right+root.val);
+        return root.val+ Math.max(left,right);
     }
 }
-
